@@ -1,14 +1,25 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:cmmaa/reservation.dart';
-import 'package:cmmaa/users.dart';
+import 'package:firedart/firedart.dart';
+import 'package:cmma_admin/reservation.dart';
+import 'package:cmma_admin/users/users.dart';
 
 void main() async {
-  // await Firebase.initializeApp(
-  //     //options: DefaultFirebaseOptions.currentPlatform,
-  //     );
+  if (!kIsWeb) {
+    // await Firebase.initializeApp(
+    //     options: const FirebaseOptions(
+    //   apiKey: 'AIzaSyBm54--sB48BMZmmxWf9lymsEyofP8sms4',
+    //   appId: '1:543903890015:web:1277c5062c276f8ab4f9ea',
+    //   messagingSenderId: '543903890015',
+    //   projectId: 'cmma-1e6df',
+    // ));
+    Firestore.initialize(
+      'cmma-1e6df',
+    );
+  }
 
   runApp(MaterialApp(
-    title: 'Flutter Demo',
+    title: 'CMMA Administration',
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
       primarySwatch: Colors.blue,
@@ -32,7 +43,7 @@ class HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: (currentIndex == 0)
             ? const Text("Platzreservierung")
-            : Text(Users.title),
+            : Text(Users.collectionName),
         actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.help))],
       ),
       body: (currentIndex == 0) ? Reservation(10) : const Users(),
